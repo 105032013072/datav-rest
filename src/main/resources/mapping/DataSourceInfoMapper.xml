@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bosssoft.platform.datav.mapper.infra.DataSourceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.bosssoft.platform.datav.domain.DataSourceInfo" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="DATA_SOURCE_NAME" property="dataSourceName" jdbcType="VARCHAR" />
+    <result column="HOST_IP" property="hostIp" jdbcType="VARCHAR" />
+    <result column="DB_PORT" property="dbPort" jdbcType="VARCHAR" />
+    <result column="DB_TYPE" property="dbType" jdbcType="VARCHAR" />
+    <result column="DB_DRIVER" property="dbDriver" jdbcType="VARCHAR" />
+    <result column="DB_INSTANCE" property="dbInstance" jdbcType="VARCHAR" />
+    <result column="DB_USERNAME" property="dbUsername" jdbcType="VARCHAR" />
+    <result column="DB_PASSWORD" property="dbPassword" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, DATA_SOURCE_NAME, HOST_IP, DB_PORT, DB_TYPE, DB_DRIVER, DB_INSTANCE, DB_USERNAME, 
+    DB_PASSWORD, CREATE_TIME, MODIFY_TIME, CREATE_USER, MODIFY_USER
+  </sql>
+  
+  <select id="selectDataSourceByCondition" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from dv_data_source t
+  	<where>
+  		<if test="search.dataSourceName != null and search.dataSourceName != ''">
+  		and t.DATA_SOURCE_NAME like CONCAT('%',CONCAT(#{search.dataSourceName},'%'))
+  		
+        </if>
+        
+        <if test="search.dbType != null and search.dbType != ''">
+  		and t.DB_TYPE like CONCAT('%',CONCAT(#{search.dbType},'%'))
+        </if>
+  	</where>
+  	order by t.CREATE_TIME desc
+  </select>
+  
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bosssoft.platform.datav.mapper.infra.ReportCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.bosssoft.platform.datav.domain.ReportCategory" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="CATEGORY_ID" property="categoryId" jdbcType="VARCHAR" />
+    <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectCategoryByNameLike" resultMap="BaseResultMap">
+  	select *
+  	from dv_report_category t
+  	where t.CATEGORY_NAME like CONCAT('%',CONCAT(#{nameLike},'%'))
+  </select>
+  
+</mapper>

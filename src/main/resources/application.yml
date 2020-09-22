@@ -1,0 +1,40 @@
+server:
+   port: 8085
+   servlet: 
+    context-path: /datav
+   tomcat:
+      uri-encoding: UTF-8
+      
+thread:
+  pool:
+    corePoolSize: 20
+    maxPoolSize: 30
+    keepAliveSeconds: 300
+    queueCapacity: 50
+
+logging:
+  level: 
+    ROOT: INFO
+    org.springframework: INFO
+  config: classpath:log4j2.xml
+    
+microservice:
+  framework:
+    #数据访问层相关配置
+    datasource:
+      enabled: true
+      default:
+        url: jdbc:mysql://127.0.0.1:3306/datav-bs
+        username: root
+        password: root
+      #  url: jdbc:oracle:thin:@172.18.174.87:1521/orcl
+      #  username: form_bs
+      #  password: bs
+        maxActive: 500
+        mybatis:
+          mapper-locations: classpath:mapping/*.xml
+          mapper-base-packages: com.bosssoft.platform.datav.mapper.infra
+          type-aliases-packages: com.bosssoft.platform.datav.domain
+          type-handlers-packages: com.bosssoft
+ ##  mapper-base-packages: com.bosssoft.platform.microservice.**.dao
+   

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bosssoft.platform.datav.mapper.infra.DashboardMapper" >
+  <resultMap id="BaseResultMap" type="com.bosssoft.platform.datav.domain.Dashboard" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="DASHBOARD_ID" property="dashboardId" jdbcType="VARCHAR" />
+    <result column="DASHBOARD_NAME" property="dashboardName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="VARCHAR" />
+    <result column="SHARE_STATE" property="shareState" jdbcType="VARCHAR" />
+    <result column="SHARE_TOKEN" property="shareToken" jdbcType="VARCHAR" />
+    <result column="SHARE_PASSWORD" property="sharePassword" jdbcType="VARCHAR" />
+    <result column="CONFIGURATION" property="configuration" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>
