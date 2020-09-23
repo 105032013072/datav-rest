@@ -21,9 +21,13 @@ import com.bosssoft.platform.datav.vo.CategoryTreeNode;
 
 public  abstract class CategoryServiceImpl implements CategoryService {
 
+    protected CategoryMapper categoryMapper;
+    
+    protected DataViewMapper dataViewMapper;
+    
     @Override
     public Category getCategoryById(String categoryId) {
-        return (Category)getCategoryMapper().selectByPrimaryKey(categoryId);
+        return (Category)categoryMapper.selectByPrimaryKey(categoryId);
     }
 
     @Override
@@ -32,7 +36,7 @@ public  abstract class CategoryServiceImpl implements CategoryService {
         category.setCreateTime(new Date());
         category.setCreateUser(BasicConstant.DEFAULT_OPERATOR);
 
-        getCategoryMapper().insertSelective(category);
+        categoryMapper.insertSelective(category);
 
         return category;
     }
@@ -43,15 +47,15 @@ public  abstract class CategoryServiceImpl implements CategoryService {
         //删除该分类下的数据视图
         DataView condition=creatBelongingDataView();
         condition.setCategoryId(categoryId);
-        getBelongingDataViewMapper().delete(condition);
+        dataViewMapper.delete(condition);
         
         //删除分类
-        getCategoryMapper().deleteByPrimaryKey(categoryId);
+        categoryMapper.deleteByPrimaryKey(categoryId);
         
         //获取子分类
         Category categoryCondition=createCategory();
         categoryCondition.setParentId(categoryId);
-        List<Category> childrenCategory=getCategoryMapper().select(categoryCondition);
+        List<Category> childrenCategory=categoryMapper.select(categoryCondition);
         
         //删除子分类
         for (Category category : childrenCategory) {
@@ -64,7 +68,7 @@ public  abstract class CategoryServiceImpl implements CategoryService {
         category.setModifyTime(new Date());
         category.setModifyUser(BasicConstant.DEFAULT_OPERATOR);
 
-        getCategoryMapper().updateByPrimaryKeySelective(category);
+        categoryMapper.updateByPrimaryKeySelective(category);
         return category;
     }
 
@@ -74,11 +78,11 @@ public  abstract class CategoryServiceImpl implements CategoryService {
         List<Category> formCategorys = new ArrayList<Category>();
         if (StringUtils.isEmpty(categoryNameLike)) {
             // 获取所有分类
-            formCategorys = getCategoryMapper().selectAll();
+            formCategorys = categoryMapper.selectAll();
             return createCategoryTreeHasParent(formCategorys);
         } else {
             // 根据条件查询
-            formCategorys = getCategoryMapper().selectCategoryByNameLike(categoryNameLike);
+            formCategorys = categoryMapper.selectCategoryByNameLike(categoryNameLike);
             return createCategoryTreeAllLeaf(formCategorys);
         }
     }
@@ -158,9 +162,6 @@ public  abstract class CategoryServiceImpl implements CategoryService {
         return result;
     }
     
-    public abstract CategoryMapper getCategoryMapper();
-    
-    public abstract DataViewMapper getBelongingDataViewMapper();
     
     public abstract Category createCategory();
     /**

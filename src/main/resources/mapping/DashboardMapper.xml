@@ -18,4 +18,30 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
     <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <resultMap id="DashboardResultMap" type="com.bosssoft.platform.datav.domain.Dashboard" extends="BaseResultMap">
+  	<result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectDataViewByCondition" resultMap="DashboardResultMap">
+  	select t.*,c.CATEGORY_NAME
+  	from dv_dashboard t
+  	left join dv_dashboard_category c on t.CATEGORY_ID=c.CATEGORY_ID
+  	<where>
+  		<if test="search.categoryId !=null and search.categoryId!=''">
+  		 and t.CATEGORY_ID=#{search.categoryId}
+  		</if>
+  		
+  		<if test="search.shareState !=null and search.shareState!=''">
+  		 and t.SHARE_STATE=#{search.shareState}
+  		</if>
+  		
+  		<if test="search.nameLike !=null and search.nameLike!=''">
+  		 and t.DASHBOARD_NAME like CONCAT('%',CONCAT(#{search.nameLike},'%'))
+  		</if>
+  	</where>
+  	order by t.CREATE_TIME desc
+  	
+  </select>
+  
 </mapper>

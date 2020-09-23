@@ -1,6 +1,7 @@
  package com.bosssoft.platform.datav.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,17 +11,13 @@ import com.bosssoft.platform.datav.service.CategoryService;
 import io.swagger.annotations.Api;
 
 @RestController
- @RequestMapping("/v1/report-category")
+ @RequestMapping(value="/v1/report-category",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
  @Api(tags = "报表分类管理")
  public class ReportCategoryController extends CategoryController<ReportCategory>{
 
-    @Autowired
-    private CategoryService reportCategoryService;
-    
-    @Override
-    public CategoryService getCategoryService() {
-        
-         return reportCategoryService;
+    @Autowired    
+    public ReportCategoryController(CategoryService reportCategoryService){
+        super.categoryService=reportCategoryService;
     }
 
 }

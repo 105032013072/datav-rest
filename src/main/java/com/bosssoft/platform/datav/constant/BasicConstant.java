@@ -32,5 +32,7 @@
       */
      public static final String ENCODING_UTF8 = "utf-8";
      
+     public static final String SHARE_TOKEN_SECRET="bosssoft";
+     
 
 }

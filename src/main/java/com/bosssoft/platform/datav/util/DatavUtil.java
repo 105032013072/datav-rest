@@ -2,12 +2,18 @@
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+
+import com.bosssoft.platform.datav.constant.BasicConstant;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 
 public class DatavUtil {
@@ -44,4 +50,20 @@ public class DatavUtil {
          String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
          return uuid;
      }
+     
+     /**
+      * 创建分享的token
+      * @param dataViewId
+      * @return
+      */
+     public static String createShareToken(String dataViewId){
+         String token=
+             Jwts.builder()
+             .claim("dataViewId",dataViewId)
+             .setIssuedAt(new Date())
+             //.setExpiration(new Date(System.currentTimeMillis()+EXPIRE))
+             .signWith(SignatureAlgorithm.HS256,BasicConstant.SHARE_TOKEN_SECRET).compact();
+         return token;
+     } 
+     
 }

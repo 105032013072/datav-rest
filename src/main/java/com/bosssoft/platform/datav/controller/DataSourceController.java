@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiParam;
  * @author huangxw
  */
 @RestController
-@RequestMapping("/v1/data-source")
+@RequestMapping(value="/v1/data-source",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Api(tags = "数据源管理")
 public class DataSourceController {
 
@@ -43,7 +43,7 @@ public class DataSourceController {
     @Autowired
     private DataSourceService dataSourceService;
 
-    @GetMapping(value = "/{dataSourceInfoId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/{dataSourceInfoId}")
     @ApiOperation(value = "根据数据源ID查询数据源对象")
     public DataSourceInfo getDataSourceInfoById(@PathVariable(name = "dataSourceInfoId") String dataSourceInfoId) {
         return dataSourceService.getDataSourceInfoById(dataSourceInfoId);
@@ -56,7 +56,7 @@ public class DataSourceController {
      * @return
      * @throws DynamicFormException
      */
-    @PostMapping(value = "/page-query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/page-query")
     @ApiOperation(value = "分页查询数据源信息")
     public ResultPageData<DataSourceInfo> pageDataSource(
         @ApiParam("数据源实体类") @RequestBody(required = false) DataSourceInfo dataSourceInfo,
@@ -65,7 +65,7 @@ public class DataSourceController {
         return dataSourceService.pageDataSourceInfo(dataSourceInfo, pageNum, pageSize);
     }
 
-    @PostMapping(value = "/dataSourceInfos", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/dataSourceInfos")
     @ApiOperation(value = "查询数据源列表")
     public List<DataSourceInfo>
         getDataSourceList(@ApiParam("数据源实体类") @RequestBody(required = false) DataSourceInfo dataSourceInfo) {
@@ -78,20 +78,20 @@ public class DataSourceController {
      * @param dataSourceInfo
      * @return
      */
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "")
     @ApiOperation(value = "新增数据源信息")
     public DataSourceInfo saveDataSourceInfo(@ApiParam("数据源实体类") @RequestBody DataSourceInfo dataSourceInfo) {
         return dataSourceService.saveDataSourceInfo(dataSourceInfo);
 
     }
 
-    @GetMapping(value = "/delete-verification/{dataSourceInfoId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/delete-verification/{dataSourceInfoId}")
     @ApiOperation(value = "数据源删除前校验", notes = "删除数据源之前校验是否有关于数据源的引用")
     public boolean deleteVerif(@PathVariable(name = "dataSourceInfoId") String dataSourceInfoId) {
         return !dataSourceService.existReferenceAboutDataSource(dataSourceInfoId);
     }
 
-    @PostMapping(value = "/batch-verification", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/batch-verification")
     @ApiOperation(value = "批量验证数据源")
     public BatchDeleteVerifResult<DataSourceInfo> batchDeleteVerif(@RequestBody List<String> dataSourceInfoIds) {
         List<DataSourceInfo> illegalObjects = new ArrayList<DataSourceInfo>();
@@ -115,7 +115,7 @@ public class DataSourceController {
     /**
      * 删除单个数据源信息
      */
-    @DeleteMapping(value = "/{dataSourceInfoId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "/{dataSourceInfoId}")
     @ApiOperation(value = "删除单个数据源信息")
     public String deleteDataSourceInfo(@PathVariable(name = "dataSourceInfoId") String dataSourceInfoId) {
         dataSourceService.deleteDataSourceInfoById(dataSourceInfoId);
@@ -127,7 +127,7 @@ public class DataSourceController {
      * 
      * @return
      */
-    @PostMapping(value = "/batch-delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/batch-delete")
     @ApiOperation(value = "批量删除数据源信息")
     public List<String> batchDeleteDataSourceInfo(@RequestBody List<String> dataSourceInfoIds) {
         for (String id : dataSourceInfoIds) {
@@ -142,7 +142,7 @@ public class DataSourceController {
      * @param dataSourceInfo
      * @return
      */
-    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "")
     @ApiOperation(value = "编辑数据源信息")
     public DataSourceInfo modifyDataSourceInfo(@RequestBody DataSourceInfo dataSourceInfo) {
         return dataSourceService.modifyDataSourceInfo(dataSourceInfo);
@@ -154,7 +154,7 @@ public class DataSourceController {
      * 
      * @return
      */
-    @GetMapping(value = "/supported", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/supported")
     @ApiOperation(value = "获取支持的数据源类型信息", notes = "在新增数据源选择数据源类型时获取所有可选择的数据库类型")
     public List<DataSourceElement> getSupportDataSources() {
         return dataSourceService.getSupportDataSources();
@@ -165,7 +165,7 @@ public class DataSourceController {
      * 
      * @return
      */
-    @PostMapping(value = "/connection-test", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/connection-test")
     @ApiOperation(value = "数据源连接测试")
     public DBConnectionTestResult
         dataSourceConnectionTest(@ApiParam("数据源实体类") @RequestBody DataSourceInfo dataSourceInfo) {

@@ -7,28 +7,16 @@ import com.bosssoft.platform.datav.domain.Category;
 import com.bosssoft.platform.datav.domain.Dashboard;
 import com.bosssoft.platform.datav.domain.DashboardCategory;
 import com.bosssoft.platform.datav.domain.DataView;
-import com.bosssoft.platform.datav.mapper.CategoryMapper;
-import com.bosssoft.platform.datav.mapper.DataViewMapper;
 import com.bosssoft.platform.datav.mapper.infra.DashboardCategoryMapper;
 import com.bosssoft.platform.datav.mapper.infra.DashboardMapper;
 
 @Service("dashboardCategoryService")
 public class DashboardCategoryServiceImpl extends CategoryServiceImpl{
-
-    @Autowired
-    private DashboardCategoryMapper dashboardCategoryMapper;
     
     @Autowired
-    private DashboardMapper dashboardMapper;
-    
-    @Override
-    public CategoryMapper getCategoryMapper() {
-         return dashboardCategoryMapper;
-    }
-
-    @Override
-    public DataViewMapper getBelongingDataViewMapper() {
-         return dashboardMapper;
+    public DashboardCategoryServiceImpl(DashboardCategoryMapper dashboardCategoryMapper,DashboardMapper dashboardMapper){
+        super.categoryMapper=dashboardCategoryMapper;
+        super.dataViewMapper=dashboardMapper;
     }
 
     @Override
